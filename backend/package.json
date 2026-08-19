@@ -1,0 +1,20 @@
+{
+  "name": "interview-sathi-upcoming-backend",
+  "version": "1.0.0",
+  "description": "Pre-registration backend for Interview Sathi upcoming platform",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "mongoose": "^7.6.3",
+    "dotenv": "^16.3.1",
+    "helmet": "^7.1.0",
+    "nodemailer": "^6.9.7",
+    "cloudinary": "^1.41.0",
+    "express-rate-limit": "^7.1.4"
+  }
+}

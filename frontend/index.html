@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Codx_Raw</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 56'><rect width='56' height='56' rx='12' fill='%230f172a'/><path d='M18 16L12 28L18 40' stroke='%23a5b4fc' stroke-width='3' stroke-linecap='round'/><path d='M38 16L44 28L38 40' stroke='%23a5b4fc' stroke-width='3' stroke-linecap='round'/><path d='M32 8L20 26L28 26L22 48' stroke='%23facc15' stroke-width='3.5' stroke-linecap='round'/></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: #5b8def;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .bg-layer {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+    }
+    .bg-layer .grad1 {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(135deg, #6a9cff 0%, #5b8def 25%, #7b6cff 55%, #5b8def 80%, #6a9cff 100%);
+    }
+    .bg-layer .streak {
+      position: absolute;
+      background: rgba(255,255,255,0.07);
+      transform: rotate(-35deg);
+    }
+    .bg-layer .streak1 { width: 200px; height: 1400px; top: -300px; left: 10%; }
+    .bg-layer .streak2 { width: 140px; height: 1400px; top: -300px; left: 32%; background: rgba(255,255,255,0.05); }
+    .bg-layer .streak3 { width: 220px; height: 1400px; top: -300px; right: 15%; background: rgba(255,255,255,0.04); }
+    .bg-layer .streak4 { width: 100px; height: 1400px; top: -300px; right: 5%; background: rgba(255,255,255,0.06); }
+    .container {
+      position: relative; z-index: 1;
+      max-width: 800px; width: 100%;
+      padding: 60px 32px;
+      text-align: center;
+    }
+    .logo {
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; margin-bottom: 32px;
+    }
+    .logo-glow { filter: drop-shadow(0 0 16px rgba(250,204,21,0.25)); }
+    .logo-text {
+      font-size: 32px; font-weight: 800; color: #fff;
+      letter-spacing: -0.5px;
+    }
+    h1 {
+      font-size: 48px; font-weight: 800; color: #fff;
+      line-height: 1.1; margin-bottom: 18px;
+      letter-spacing: -1.5px;
+    }
+    .desc {
+      font-size: 16px; color: rgba(255,255,255,0.85);
+      line-height: 1.8; max-width: 600px; margin: 0 auto 40px;
+    }
+    .join-btn {
+      display: inline-block;
+      padding: 18px 100px; border-radius: 10px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff; font-size: 16px; font-weight: 700;
+      text-decoration: none; cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    }
+    .join-btn:hover {
+      background: rgba(255,255,255,0.25);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 28px rgba(0,0,0,0.15);
+    }
+    .people-section { margin-top: 44px; }
+    .avatars { display: flex; justify-content: center; margin-bottom: 10px; }
+    .avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; color: #fff;
+      border: 2.5px solid #5b8def;
+      margin-left: -8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .avatar:first-child { margin-left: 0; }
+    .avatar.a1 { background: #8b5cf6; }
+    .avatar.a2 { background: #ef4444; }
+    .avatar.a3 { background: #f97316; }
+    .avatar.a4 { background: #eab308; }
+    .people-count {
+      font-size: 14px; color: rgba(255,255,255,0.75);
+    }
+    .people-count strong { color: #fff; font-weight: 700; }
+    .socials {
+      display: flex; justify-content: center; gap: 12px;
+      margin-top: 44px;
+    }
+    .social-link {
+      width: 42px; height: 42px; border-radius: 11px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.7); text-decoration: none;
+      transition: all 0.25s;
+    }
+    .social-link:hover {
+      background: rgba(255,255,255,0.22);
+      color: #fff; transform: translateY(-2px);
+    }
+    .footer {
+      margin-top: 40px; font-size: 12px;
+      color: rgba(255,255,255,0.35);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 40px; }
+      .desc { font-size: 14px; }
+      .join-btn { padding: 14px 56px; font-size: 15px; }
+      .logo-text { font-size: 24px; }
+      .container { padding: 40px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-layer">
+    <div class="grad1"></div>
+    <div class="streak streak1"></div>
+    <div class="streak streak2"></div>
+    <div class="streak streak3"></div>
+    <div class="streak streak4"></div>
+  </div>
+
+  <div class="container">
+    <div class="logo">
+      <div class="logo-glow">
+        <svg width="52" height="52" viewBox="0 0 56 56" fill="none">
+          <defs>
+            <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#facc15"/>
+              <stop offset="100%" stop-color="#d97706"/>
+            </linearGradient>
+            <linearGradient id="ice" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#e0e7ff"/>
+              <stop offset="100%" stop-color="#a5b4fc"/>
+            </linearGradient>
+            <filter id="glow"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="gg"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <circle cx="28" cy="28" r="26" stroke="rgba(255,255,255,0.12)" stroke-width="1" fill="none"/>
+          <path d="M18 16L12 28L18 40" stroke="url(#ice)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+          <path d="M38 16L44 28L38 40" stroke="url(#ice)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+          <path d="M32 8L20 26L28 26L22 48" stroke="url(#gold)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#gg)"/>
+          <circle cx="26" cy="20" r="1" fill="#facc15" opacity="0.8"/>
+          <circle cx="30" cy="32" r="0.8" fill="#facc15" opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="logo-text">Codx_Raw</div>
+    </div>
+
+    <h1>Launching Soon</h1>
+
+    <p class="desc">
+      Prepare. Practice. Placed. — Your ultimate interview preparation platform. Master 2000+ real questions, AI-powered mock interviews, and personalized study plans.
+    </p>
+
+    <a href="https://forms.gle/NYSDHDqH1YszDM4W6" target="_blank" class="join-btn">
+      Join Waitlist
+    </a>
+
+    <div class="people-section">
+      <div class="avatars">
+        <div class="avatar a1">P</div>
+        <div class="avatar a2">R</div>
+        <div class="avatar a3">S</div>
+        <div class="avatar a4">K</div>
+      </div>
+      <div class="people-count"><strong>4</strong> People waiting</div>
+    </div>
+
+    <div class="socials">
+      <a href="https://instagram.com/coder_raw" target="_blank" class="social-link" title="Instagram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="footer">
+      <p>© 2026 Codx_Raw. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>
